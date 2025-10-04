@@ -183,7 +183,7 @@ namespace flowTools {
 	void ftAverageFlow::getMeanStDev(vector<float> &_v, float &_mean, float &_stDev) {
 		float mean = accumulate(_v.begin(), _v.end(), 0.0) / (float)_v.size();
 		std::vector<float> diff(_v.size());
-		std::transform(_v.begin(), _v.end(), diff.begin(), std::bind2nd(std::minus<float>(), mean));
+		std::transform(_v.begin(), _v.end(), diff.begin(), [mean](float x) { return x - mean; });
 		float sq_sum = std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0);
 		float stDev = std::sqrt(sq_sum / _v.size());
 		
@@ -218,8 +218,8 @@ namespace flowTools {
 		float y = ofClamp(_rect.y, 0, 1);
 		float maxW = 1.0 - x;
 		float maxH = 1.0 - y;
-		float w = min(_rect.width, maxW);
-		float h = min(_rect.height, maxH);
+		float w = fmin(_rect.width, maxW);
+		float h = fmin(_rect.height, maxH);
 		
 		roi = ofRectangle(x, y, w, h);
 		

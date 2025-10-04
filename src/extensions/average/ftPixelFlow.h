@@ -47,8 +47,8 @@ namespace flowTools {
 			float y = ofClamp(_rect.y, 0, 1);
 			float maxW = 1.0 - x;
 			float maxH = 1.0 - y;
-			float w = min(_rect.width, maxW);
-			float h = min(_rect.height, maxH);
+			float w = fmin(_rect.width, maxW);
+			float h = fmin(_rect.height, maxH);
 			
 			roi = ofRectangle(x, y, w, h);
 			
